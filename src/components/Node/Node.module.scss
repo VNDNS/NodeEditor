@@ -1,0 +1,50 @@
+.node {
+  position: absolute;
+  background-color: #555555;
+  border: 2px solid #1297ae;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 4px 4px 32px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  transition: box-shadow 0.3s ease;
+  font-family: Arial, Helvetica, sans-serif;
+  z-index: 11;
+}
+
+.node:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #eaeaea;
+  text-align: center;
+}
+
+.inputs,
+.outputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.inputs {
+  float: left;
+  margin-right: 24px;
+}
+
+.outputs {
+  float: right;
+  margin-left: 24px;
+}
+
+.port {
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  border: 2px solid #fff
+}
