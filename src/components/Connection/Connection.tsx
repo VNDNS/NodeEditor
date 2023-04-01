@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ConnectionProps } from '../../types';
 import styles from './Connection.module.scss';
+import { useNodeEditor } from '../../context/NodeEditorContext';
 
 // components/Connection/Connection.tsx
 const getRelativePosition = (element: HTMLElement, workspace: HTMLElement) => {
@@ -20,6 +21,7 @@ const Connection: React.FC<ConnectionProps> = ({ id, source, target }) => {
   const workspaceRef = useRef<HTMLElement | null>(null);
   const sourceRef    = useRef<HTMLElement | null>(null);
   const targetRef    = useRef<HTMLElement | null>(null);
+  const { state } = useNodeEditor();
   
   const [sourcePosition, setSourcePosition] = useState({ x: 0, y: 0 });
   const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
@@ -32,7 +34,7 @@ const Connection: React.FC<ConnectionProps> = ({ id, source, target }) => {
     setSourcePosition(getRelativePosition(sourceRef.current, workspaceRef.current))
     setTargetPosition(getRelativePosition(targetRef.current, workspaceRef.current))
   
-  }, []);
+  }, [state.nodePosition]);
 
 
   console.log('render connection');

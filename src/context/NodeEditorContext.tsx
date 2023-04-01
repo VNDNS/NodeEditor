@@ -29,6 +29,7 @@ export enum ActionTypes {
   DELETE_CONNECTION = "DELETE_CONNECTION",
   INITIATE_CONNECTION = "INITIATE_CONNECTION",
   COMPLETE_CONNECTION = "COMPLETE_CONNECTION",
+  UPDATE_POSITION = "UPDATE_POSITION",
 }
 
 type Action =
@@ -37,7 +38,7 @@ type Action =
   | { type: ActionTypes.DELETE_NODE; payload: { id: string } }
   | { type: ActionTypes.INITIATE_CONNECTION; payload: { portId: string; isInput: boolean }}
   | { type: ActionTypes.COMPLETE_CONNECTION; payload: { portId: string; isInput: boolean }}
-  
+  | { type: ActionTypes.UPDATE_POSITION; payload: { id: string; position: { x: number; y: number } } }
 
 const nodeEditorReducer = (state: NodeEditorState, action: Action): NodeEditorState => {
   switch (action.type) {
@@ -84,6 +85,16 @@ const nodeEditorReducer = (state: NodeEditorState, action: Action): NodeEditorSt
       
       return { ...state, connections: [...state.connections, newConnection], currentConnection: null };
 
+    case ActionTypes.UPDATE_POSITION:
+        console.log('update position');
+        
+        return {
+          ...state,
+          nodePosition: {
+            ...state.nodePosition,
+            [action.payload.id]: action.payload.position,
+          },
+        };
 
     default:
       return state;

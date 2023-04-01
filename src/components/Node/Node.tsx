@@ -1,12 +1,10 @@
 import React from 'react';
-import { useDraggableNode } from '../../hooks/useDragAndDrop';
 import styles from './Node.module.scss';
 import { NodeProps } from '../../types';
 import {ActionTypes, useNodeEditor} from '../../context/NodeEditorContext'
 
 export const Node: React.FC<NodeProps> = ({ id, position, title='node', inputs=2, outputs=1 }) => {
 
-  const drag = useDraggableNode(id);
   const {dispatch} = useNodeEditor()
 
   const handlePortClick = (portId: string, isInput: boolean) => {
@@ -15,8 +13,12 @@ export const Node: React.FC<NodeProps> = ({ id, position, title='node', inputs=2
   };
 
   return (
-    <div ref={drag} className={styles.node} style={{ left: position.x, top: position.y }}>
-      <div className={styles.title}>{title}</div>
+    <div
+      className={styles.node}
+      style={{ left: position.x, top: position.y }}
+      draggable="true"
+    >
+      <div  className={styles.title}>{title}</div>
       <div className={styles.inputs}>
         {Array.from({ length: inputs }).map((_, i) => {
             const portId = `${id}-input-${i}`;

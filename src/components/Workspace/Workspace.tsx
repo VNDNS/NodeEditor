@@ -1,6 +1,5 @@
 import { Node } from '../Node/Node';
 import React, { useContext } from 'react';
-import { useDroppableWorkspace } from '../../hooks/useDragAndDrop';
 import {NodeEditorContext} from '../../context/NodeEditorContext';
 import { Item } from '../../types';
 // import styles from './Workspace.module.scss';
@@ -15,13 +14,8 @@ const Workspace: React.FC = () => {
     dispatch({ type: 'UPDATE_NODE', payload: item });
   };
 
-  const drop = useDroppableWorkspace((item: Item) => {
-    updateNodePosition(item);
-  });
-
-
   return (
-      <div ref={drop} className='workspace'>
+      <div  className='workspace'>
           {nodes.map((node) => (
             <Node key={node.id} {...node} />
           ))}
