@@ -7,8 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 const AddNodeButton: React.FC = () => {
 
   const { dispatch } = useNodeEditor();
-
-  
   
   const handleAddNode = () => {
     const newNode: NodeProps = {

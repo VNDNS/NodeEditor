@@ -38,7 +38,7 @@ type Action =
   | { type: ActionTypes.DELETE_NODE; payload: { id: string } }
   | { type: ActionTypes.INITIATE_CONNECTION; payload: { portId: string; isInput: boolean }}
   | { type: ActionTypes.COMPLETE_CONNECTION; payload: { portId: string; isInput: boolean }}
-  | { type: ActionTypes.UPDATE_POSITION; payload: { id: string; position: { x: number; y: number } } }
+  | { type: ActionTypes.UPDATE_POSITION; payload: { id: string; delta: { x: number; y: number } } }
 
 const nodeEditorReducer = (state: NodeEditorState, action: Action): NodeEditorState => {
   switch (action.type) {
@@ -52,21 +52,6 @@ const nodeEditorReducer = (state: NodeEditorState, action: Action): NodeEditorSt
         connections: state.connections.filter(
           (connection) => connection.source !== action.payload.id && connection.target !== action.payload.id
         ),
-      };
-
-    case ActionTypes.UPDATE_NODE:
-      return {
-        ...state,
-        nodes: state.nodes.map((node) => {
-          if (node.id === action.payload.id) {
-
-            node.position.x += action.payload.x
-            node.position.y += action.payload.y
-
-            return node;
-          }
-          return node;
-        }),
       };
 
     case ActionTypes.INITIATE_CONNECTION:
@@ -86,14 +71,24 @@ const nodeEditorReducer = (state: NodeEditorState, action: Action): NodeEditorSt
       return { ...state, connections: [...state.connections, newConnection], currentConnection: null };
 
     case ActionTypes.UPDATE_POSITION:
-        console.log('update position');
+        
         
         return {
           ...state,
-          nodePosition: {
-            ...state.nodePosition,
-            [action.payload.id]: action.payload.position,
-          },
+          nodes: state.nodes.map((node) => {
+            
+            if (node.id === action.payload.id) {
+              
+              return {
+                ...node,
+                position: {
+                  x: node.position.x + action.payload.delta.x,
+                  y: node.position.y + action.payload.delta.y,
+                },
+              };
+            }
+            return node;
+          }),
         };
 
     default:
